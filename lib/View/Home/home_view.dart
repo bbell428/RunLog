@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:runlog/design.dart';
 
 class HomeView extends StatefulWidget {
@@ -35,13 +36,13 @@ class _MyWidgetState extends State<HomeView> {
                 height: Design.screenHeight(context) * 0.08,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber, // 배경색
-                    foregroundColor: Colors.black, // 텍스트색
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20), // 버튼 라운딩
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: null,
+                  onPressed: () => context.push('/workout'), // 스택으로 
                   child: Text('런닝하기', style: TextStyle(fontSize: Design.screenWidth(context) * 0.07),),
                 ),
               ),

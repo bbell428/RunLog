@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:runlog/main_tab_View.dart';
+import 'package:runlog/router.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,12 +8,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: '마라톤 앱',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainTabView(),
+      
+      debugShowCheckedModeBanner: false,
+      routerConfig: goRouter,
     );
   }
 }
