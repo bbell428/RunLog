@@ -1,16 +1,25 @@
 # runlog
 
-A new Flutter project.
+운동 네비게이션 앱
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### **사용자 시나리오 예시**
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. **🏠 홈화면**
+    - 오늘의 운동 요약
+    - “운동 시작하기” 버튼
+    - 최근 달린 거리 목록 (Hive에서 불러오기)
+2. **🎯 운동 목표 선택 화면**
+    - [5km] [10km] [코스 선택] 등 버튼
+    - 각 버튼마다 targetDistance 설정
+3. **🗺️ 실시간 트래킹 화면**
+    - 지도 위에 현재 위치 및 이동 경로 표시
+    - 상단에 거리, 시간 표시
+    - 목표 거리 달성 시 “운동 완료”로 전환
+4. **📊 운동 결과 요약 화면**
+    - 달린 거리, 소요 시간, 평균 속도 표시
+    - [기록 저장] → Hive 저장
+5. **📅 마라톤 일정 화면**
+    - 국내 마라톤 일정 리스트 (카드 UI)
+    - 상세 보기: 날짜, 장소, 링크
