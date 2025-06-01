@@ -16,7 +16,7 @@ final GoRouter goRouter = GoRouter(
     // 홈 화면
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
     // 런닝 맵 화면
-    GoRoute(path: 'runningMap', builder: (context, state) => const RunningMapView()),
+    GoRoute(path: '/runningMap', builder: (context, state) => const RunningMapView()),
 
     // 기록 화면
     GoRoute(path: '/workout', builder: (context, state) => const WorkoutView()),
