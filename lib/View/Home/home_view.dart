@@ -42,7 +42,7 @@ class _MyWidgetState extends State<HomeView> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: () => context.push('/workout'), // 스택으로 
+                  onPressed: () => context.push('/runningMap'), // 스택으로 
                   child: Text('런닝하기', style: TextStyle(fontSize: Design.screenWidth(context) * 0.07),),
                 ),
               ),

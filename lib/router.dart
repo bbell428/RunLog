@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:runlog/View/Home/Running_map_view.dart';
 import 'package:runlog/View/Home/home_view.dart';
 import 'package:runlog/View/Marathon/marathon_view.dart';
 import 'package:runlog/View/Workout/workout_view.dart';
@@ -14,6 +15,8 @@ final GoRouter goRouter = GoRouter(
 
     // 홈 화면
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
+    // 런닝 맵 화면
+    GoRoute(path: 'runningMap', builder: (context, state) => const RunningMapView()),
 
     // 기록 화면
     GoRoute(path: '/workout', builder: (context, state) => const WorkoutView()),
