@@ -11,8 +11,8 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
   }
 
   Future<void> _onGetCurrentLocationRequested(
-    GetCurrentLocationRequested event,
-    Emitter<RunningMapState> emit,
+    GetCurrentLocationRequested event, // 요구사항
+    Emitter<RunningMapState> emit, // 알림
   ) async {
     emit(RunningMapLoading());
 
