@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:runlog/design.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RunningMapView extends StatefulWidget {
   const RunningMapView({super.key});
@@ -12,7 +12,7 @@ class RunningMapView extends StatefulWidget {
 }
 
 class _RunningMapViewState extends State<RunningMapView> {
-
+  LatLng? _currentPosition;
 
   @override
   void initState() {
@@ -23,7 +23,6 @@ class _RunningMapViewState extends State<RunningMapView> {
   Future<void> _getCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // 위치 서비스 꺼져있을 때
       print('위치 서비스가 비활성화되어 있습니다.');
       return;
     }
@@ -32,52 +31,61 @@ class _RunningMapViewState extends State<RunningMapView> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // 거부한 경우
         print('위치 권한이 거부되었습니다.');
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // 영구적으로 거부한 경우: 설정으로 유도
       print('위치 권한이 영구적으로 거부되었습니다. 설정에서 허용해주세요.');
-      await Geolocator.openAppSettings(); // 설정 앱으로 이동
+      await Geolocator.openAppSettings();
       return;
     }
 
-    // 위치 권한 OK → 현재 위치 가져오기
     Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
 
     setState(() {
-      // _currentPosition = LatLng(position.latitude, position.longitude);
+      _currentPosition = LatLng(position.latitude, position.longitude);
     });
   }
 
   @override
-Widget build(BuildContext context) {
-  return FlutterMap(
-    options: MapOptions(
-      initialCenter: LatLng(0, 0), // Center the map over London
-      initialZoom: 9.2,
-    ),
-    children: [
-      TileLayer( // Bring your own tiles
-        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', // For demonstration only
-        userAgentPackageName: 'com.example.app', // Add your app identifier
-        // And many more recommended properties!
-      ),
-      RichAttributionWidget( // Include a stylish prebuilt attribution widget that meets all requirments
-        attributions: [
-          TextSourceAttribution(
-            'OpenStreetMap contributors',
-            // onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')), // (external)
-          ),
-          // Also add images...
-        ],
-      ),
-    ],
-  );
-}
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _currentPosition == null
+          ? const Center(child: CircularProgressIndicator())
+          : FlutterMap(
+              options: MapOptions(
+                initialCenter: _currentPosition!,
+                initialZoom: 16.0,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.example.runlog',
+                ),
+                MarkerLayer(
+                  markers: [
+                    Marker(
+                      point: _currentPosition!,
+                      width: 40,
+                      height: 40,
+                      child: const Icon(Icons.location_pin, color: Colors.red, size: 40),
+                    ),
+                  ],
+                ),
+                RichAttributionWidget(
+                  attributions: [
+                    TextSourceAttribution(
+                      'OpenStreetMap contributors',
+                      onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')), // (external)
+                    ),
+                  ],
+                ),
+              ],
+            ),
+    );
+  }
 }
