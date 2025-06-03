@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:runlog/design.dart';
 
 class RunningMapView extends StatefulWidget {
@@ -11,14 +12,7 @@ class RunningMapView extends StatefulWidget {
 }
 
 class _RunningMapViewState extends State<RunningMapView> {
-  GoogleMapController? _mapController;
-  LatLng? _currentPosition;
 
-  @override
-  void dispose() {
-    _mapController?.dispose();
-    super.dispose();
-  }
 
   @override
   void initState() {
@@ -57,47 +51,33 @@ class _RunningMapViewState extends State<RunningMapView> {
     );
 
     setState(() {
-      _currentPosition = LatLng(position.latitude, position.longitude);
+      // _currentPosition = LatLng(position.latitude, position.longitude);
     });
-
-    // 위치 바뀔때마다 지도 중심을 내 위치로 이동 (줌 레벨 16: 길거리 수준)
-    _mapController?.animateCamera(
-      CameraUpdate.newLatLngZoom(_currentPosition!, 16),
-    );
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('런닝')),
-      body: Column(
-        children: [
-          Container(
-            height: Design.screenHeight(context) * 0.4,
-            color: Colors.grey.shade200,
-            child:
-                _currentPosition == null
-                    ? const Center(child: CircularProgressIndicator())
-                    : GoogleMap(
-                      // 처음 위치를 나에게 중심으로 설정
-                      initialCameraPosition: CameraPosition(
-                        target: _currentPosition!,
-                        zoom: 16,
-                      ),
-                      // 지도 생성 시 컨트롤러 저장
-                      onMapCreated: (controller) {
-                        _mapController = controller;
-                      },
-                      // 위치 점, 오른쪽 아래 내 위치 버튼 표시
-                      myLocationEnabled: true,
-                      myLocationButtonEnabled: true,
-                    ),
+Widget build(BuildContext context) {
+  return FlutterMap(
+    options: MapOptions(
+      initialCenter: LatLng(0, 0), // Center the map over London
+      initialZoom: 9.2,
+    ),
+    children: [
+      TileLayer( // Bring your own tiles
+        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', // For demonstration only
+        userAgentPackageName: 'com.example.app', // Add your app identifier
+        // And many more recommended properties!
+      ),
+      RichAttributionWidget( // Include a stylish prebuilt attribution widget that meets all requirments
+        attributions: [
+          TextSourceAttribution(
+            'OpenStreetMap contributors',
+            // onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')), // (external)
           ),
-
-          // 지도 아래에 다른 위젯
-          Expanded(child: Center(child: Text('이것 저것 넣을 수 있습니다 밑에'))),
+          // Also add images...
         ],
       ),
-    );
-  }
+    ],
+  );
+}
 }

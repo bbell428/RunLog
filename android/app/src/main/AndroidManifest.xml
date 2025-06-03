@@ -2,8 +2,6 @@
     <!-- 위치 권한 추가 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- Android 12+ (API 31 이상) 추가 설정 -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <!-- Android 10+ 백그라운드 위치 사용 시 -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
@@ -32,11 +30,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
-        <!-- 구글 지도 API 키 설정 -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="API key" />
     </application>
     <queries>
         <intent>
