@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
 import 'package:runlog/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/state/running_map_state.dart';
@@ -92,12 +93,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                             child: FloatingActionButton(
                               mini: true,
                               onPressed: () {
-                                if (state is RunningMapLoaded) {
-                                  mapController.move(
-                                    state.currentPosition,
-                                    16.0,
-                                  );
-                                }
+                                mapController.move(state.currentPosition, 16.0);
                               },
                               child: const Icon(Icons.my_location),
                             ),
@@ -111,7 +107,102 @@ class _RunningMapViewState extends State<RunningMapView> {
                 ),
               ),
             ),
-            const Expanded(child: Center(child: Text('이것 저것 넣을 수 있습니다 밑에'))),
+            Expanded(
+              child: BlocBuilder<RunningMapBloc, RunningMapState>(
+                builder: (context, state) {
+                  if (state is! RunningMapLoaded) return const SizedBox();
+
+                  final bloc = context.read<RunningMapBloc>();
+                  final LatLng current = state.currentPosition;
+                  const double delta = 0.0001; // 약 10~11m 이동
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("방향 버튼으로 위치 이동"),
+                      const SizedBox(height: 16),
+                      // 위쪽 버튼
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.arrow_upward),
+                            label: const Text("위로"),
+                            onPressed: () {
+                              bloc.add(
+                                RunningLocationChanged(
+                                  LatLng(
+                                    current.latitude + delta,
+                                    current.longitude,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      // 좌/우 버튼
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.arrow_back),
+                            label: const Text("왼쪽"),
+                            onPressed: () {
+                              bloc.add(
+                                RunningLocationChanged(
+                                  LatLng(
+                                    current.latitude,
+                                    current.longitude - delta,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(width: 16),
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.arrow_forward),
+                            label: const Text("오른쪽"),
+                            onPressed: () {
+                              bloc.add(
+                                RunningLocationChanged(
+                                  LatLng(
+                                    current.latitude,
+                                    current.longitude + delta,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      // 아래쪽 버튼
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.arrow_downward),
+                            label: const Text("아래로"),
+                            onPressed: () {
+                              bloc.add(
+                                RunningLocationChanged(
+                                  LatLng(
+                                    current.latitude - delta,
+                                    current.longitude,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

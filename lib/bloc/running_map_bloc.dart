@@ -59,6 +59,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     }
   }
 
+  // 실시간 자신 위치 추적
   void _onRunningLocationChanged(
     RunningLocationChanged event,
     Emitter<RunningMapState> emit,
