@@ -57,9 +57,9 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           distanceFilter: 5,
         ),
       ).listen((Position position) {
-        add(RunningLocationChanged(
-          LatLng(position.latitude, position.longitude),
-        ));
+        add(
+          RunningLocationChanged(LatLng(position.latitude, position.longitude)),
+        );
       });
     } catch (e) {
       emit(RunningMapError('위치 스트림 실패: $e'));
@@ -103,12 +103,14 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
   void _onTick(Tick event, Emitter<RunningMapState> emit) {
     if (_path.isEmpty || !_isRunning || _startTime == null) return;
     final duration = DateTime.now().difference(_startTime!);
-    emit(RunningInProgress(
-      path: List.from(_path),
-      distance: _distance,
-      duration: duration,
-      currentPosition: _path.last,
-    ));
+    emit(
+      RunningInProgress(
+        path: List.from(_path),
+        distance: _distance,
+        duration: duration,
+        currentPosition: _path.last,
+      ),
+    );
   }
 
   @override

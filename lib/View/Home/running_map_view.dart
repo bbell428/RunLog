@@ -18,6 +18,9 @@ class RunningMapView extends StatefulWidget {
 class _RunningMapViewState extends State<RunningMapView> {
   final mapController = MapController();
 
+  double distance2 = 0.0; // 거리 할당
+  late Duration duration2; // 시간 할당
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -32,11 +35,14 @@ class _RunningMapViewState extends State<RunningMapView> {
                   flex: 3,
                   child: BlocConsumer<RunningMapBloc, RunningMapState>(
                     listener: (context, state) {
-                      if (state is RunningMapLoaded || state is RunningInProgress) {
+                      if (state is RunningMapLoaded ||
+                          state is RunningInProgress) {
                         WidgetsBinding.instance.addPostFrameCallback((_) {
-                          final pos = (state is RunningMapLoaded)
-                              ? state.currentPosition
-                              : (state as RunningInProgress).currentPosition;
+                          final pos =
+                              (state is RunningMapLoaded)
+                                  ? state.currentPosition
+                                  : (state as RunningInProgress)
+                                      .currentPosition;
                           mapController.move(pos, 16.0);
                         });
                       }
@@ -46,11 +52,14 @@ class _RunningMapViewState extends State<RunningMapView> {
                         return const Center(child: CircularProgressIndicator());
                       } else if (state is RunningMapError) {
                         return Center(child: Text(state.message));
-                      } else if (state is RunningMapLoaded || state is RunningInProgress) {
-                        final pos = (state is RunningMapLoaded)
-                            ? state.currentPosition
-                            : (state as RunningInProgress).currentPosition;
-                        final path = (state is RunningInProgress) ? state.path : [];
+                      } else if (state is RunningMapLoaded ||
+                          state is RunningInProgress) {
+                        final pos =
+                            (state is RunningMapLoaded)
+                                ? state.currentPosition
+                                : (state as RunningInProgress).currentPosition;
+                        final path =
+                            (state is RunningInProgress) ? state.path : [];
 
                         return Stack(
                           children: [
@@ -62,14 +71,16 @@ class _RunningMapViewState extends State<RunningMapView> {
                               ),
                               children: [
                                 TileLayer(
-                                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                  urlTemplate:
+                                      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                                   userAgentPackageName: 'com.example.runlog',
                                 ),
                                 if (path.isNotEmpty)
                                   PolylineLayer(
                                     polylines: [
                                       Polyline(
-                                        points: path.whereType<LatLng>().toList(),
+                                        points:
+                                            path.whereType<LatLng>().toList(),
                                         strokeWidth: 4.0,
                                         color: Colors.blue,
                                       ),
@@ -81,7 +92,11 @@ class _RunningMapViewState extends State<RunningMapView> {
                                       point: pos,
                                       width: 40,
                                       height: 40,
-                                      child: const Icon(Icons.location_pin, color: Colors.red, size: 40),
+                                      child: const Icon(
+                                        Icons.location_pin,
+                                        color: Colors.red,
+                                        size: 40,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -89,9 +104,12 @@ class _RunningMapViewState extends State<RunningMapView> {
                                   attributions: [
                                     TextSourceAttribution(
                                       'OpenStreetMap contributors',
-                                      onTap: () => launchUrl(
-                                        Uri.parse('https://openstreetmap.org/copyright'),
-                                      ),
+                                      onTap:
+                                          () => launchUrl(
+                                            Uri.parse(
+                                              'https://openstreetmap.org/copyright',
+                                            ),
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -113,8 +131,12 @@ class _RunningMapViewState extends State<RunningMapView> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("거리: ${state.distance.toStringAsFixed(1)} m"),
-                                    Text("시간: ${state.duration.inMinutes}분 ${state.duration.inSeconds % 60}초"),
+                                    Text(
+                                      "거리: ${state.distance.toStringAsFixed(1)} m",
+                                    ),
+                                    Text(
+                                      "시간: ${state.duration.inMinutes}분 ${state.duration.inSeconds % 60}초",
+                                    ),
                                   ],
                                 ),
                               ),
@@ -130,14 +152,16 @@ class _RunningMapViewState extends State<RunningMapView> {
                   flex: 2,
                   child: BlocBuilder<RunningMapBloc, RunningMapState>(
                     builder: (context, state) {
-                      if (state is! RunningMapLoaded && state is! RunningInProgress) {
+                      if (state is! RunningMapLoaded &&
+                          state is! RunningInProgress) {
                         return const SizedBox();
                       }
 
                       final bloc = context.read<RunningMapBloc>();
-                      final current = (state is RunningMapLoaded)
-                          ? state.currentPosition
-                          : (state as RunningInProgress).currentPosition;
+                      final current =
+                          (state is RunningMapLoaded)
+                              ? state.currentPosition
+                              : (state as RunningInProgress).currentPosition;
                       const double delta = 0.0001;
 
                       return Column(
@@ -152,7 +176,14 @@ class _RunningMapViewState extends State<RunningMapView> {
                                 icon: const Icon(Icons.arrow_upward),
                                 label: const Text("위로"),
                                 onPressed: () {
-                                  bloc.add(RunningLocationChanged(LatLng(current.latitude + delta, current.longitude)));
+                                  bloc.add(
+                                    RunningLocationChanged(
+                                      LatLng(
+                                        current.latitude + delta,
+                                        current.longitude,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             ],
@@ -165,7 +196,14 @@ class _RunningMapViewState extends State<RunningMapView> {
                                 icon: const Icon(Icons.arrow_back),
                                 label: const Text("왼쪽"),
                                 onPressed: () {
-                                  bloc.add(RunningLocationChanged(LatLng(current.latitude, current.longitude - delta)));
+                                  bloc.add(
+                                    RunningLocationChanged(
+                                      LatLng(
+                                        current.latitude,
+                                        current.longitude - delta,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                               const SizedBox(width: 16),
@@ -173,7 +211,14 @@ class _RunningMapViewState extends State<RunningMapView> {
                                 icon: const Icon(Icons.arrow_forward),
                                 label: const Text("오른쪽"),
                                 onPressed: () {
-                                  bloc.add(RunningLocationChanged(LatLng(current.latitude, current.longitude + delta)));
+                                  bloc.add(
+                                    RunningLocationChanged(
+                                      LatLng(
+                                        current.latitude,
+                                        current.longitude + delta,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             ],
@@ -186,7 +231,14 @@ class _RunningMapViewState extends State<RunningMapView> {
                                 icon: const Icon(Icons.arrow_downward),
                                 label: const Text("아래로"),
                                 onPressed: () {
-                                  bloc.add(RunningLocationChanged(LatLng(current.latitude - delta, current.longitude)));
+                                  bloc.add(
+                                    RunningLocationChanged(
+                                      LatLng(
+                                        current.latitude - delta,
+                                        current.longitude,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             ],
@@ -203,12 +255,20 @@ class _RunningMapViewState extends State<RunningMapView> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          context.read<RunningMapBloc>().add(StartRunning());
+                          context.read<RunningMapBloc>().add(StartRunning()); // 실시간 변화
                         },
                         child: const Text("운동 시작"),
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          final state = context.read<RunningMapBloc>().state; // 이렇게 쓰면 된다.
+                          if (state is RunningInProgress) {
+                            distance2 = state.distance;
+                            duration2 = state.duration;
+                          }
+                          print(distance2);
+                          print(duration2);                    
+
                           context.read<RunningMapBloc>().add(StopRunning());
                         },
                         child: const Text("운동 종료"),
