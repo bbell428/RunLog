@@ -1,4 +1,6 @@
 // Bloc
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -6,13 +8,16 @@ import 'package:runlog/bloc/event/running_map_event.dart';
 import 'package:runlog/bloc/state/running_map_state.dart';
 
 class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
+  StreamSubscription<Position>? _positionSubscription;
+
   RunningMapBloc() : super(RunningMapInitial()) {
     on<GetCurrentLocationRequested>(_onGetCurrentLocationRequested);
+    on<RunningLocationChanged>(_onRunningLocationChanged);
   }
 
   Future<void> _onGetCurrentLocationRequested(
-    GetCurrentLocationRequested event, // 요구사항
-    Emitter<RunningMapState> emit, // 알림
+    GetCurrentLocationRequested event,
+    Emitter<RunningMapState> emit,
   ) async {
     emit(RunningMapLoading());
 
@@ -38,13 +43,32 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
         return;
       }
 
-      final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-      
-      emit(RunningMapLoaded(LatLng(position.latitude, position.longitude)));
+      // 위치 스트림 시작
+      _positionSubscription = Geolocator.getPositionStream(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 5, // 5미터 이상 이동해야 이벤트 발생
+        ),
+      ).listen((Position position) {
+        add(RunningLocationChanged(
+          LatLng(position.latitude, position.longitude),
+        ));
+      });
     } catch (e) {
-      emit(RunningMapError('위치 가져오기 실패: $e'));
+      emit(RunningMapError('위치 스트림 실패: $e'));
     }
+  }
+
+  void _onRunningLocationChanged(
+    RunningLocationChanged event,
+    Emitter<RunningMapState> emit,
+  ) {
+    emit(RunningMapLoaded(event.position));
+  }
+
+  @override
+  Future<void> close() {
+    _positionSubscription?.cancel();
+    return super.close();
   }
 }
