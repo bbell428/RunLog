@@ -12,3 +12,4 @@ class RunningLocationChanged extends RunningMapEvent { // 실시간 위치 변�
 
 class StartRunning extends RunningMapEvent {} // 운동 시작
 class StopRunning extends RunningMapEvent {}  // 운동 종료
+class Tick extends RunningMapEvent {}

@@ -118,6 +118,3 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     return super.close();
   }
 }
-
-// 추가된 이벤트 정의
-class Tick extends RunningMapEvent {}
