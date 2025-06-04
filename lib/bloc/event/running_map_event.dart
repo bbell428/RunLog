@@ -9,3 +9,6 @@ class RunningLocationChanged extends RunningMapEvent { // 실시간 위치 변�
   final LatLng position;
   RunningLocationChanged(this.position);
 }
+
+class StartRunning extends RunningMapEvent {} // 운동 시작
+class StopRunning extends RunningMapEvent {}  // 운동 종료

@@ -17,3 +17,17 @@ class RunningMapError extends RunningMapState {
   final String message;
   RunningMapError(this.message);
 }
+
+class RunningInProgress extends RunningMapState {
+  final List<LatLng> path;
+  final double distance; // 총 이동 거리 (meter)
+  final Duration duration;
+  final LatLng currentPosition;
+
+  RunningInProgress({
+    required this.path,
+    required this.distance,
+    required this.duration,
+    required this.currentPosition,
+  });
+}
