@@ -89,7 +89,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     _path = [];
     _distance = 0;
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+    _timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
       add(Tick());
     });
   }
