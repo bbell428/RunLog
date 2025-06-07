@@ -4,7 +4,7 @@ import 'package:runlog/bloc/state/running_result_state.dart';
 import 'package:runlog/repository/running_result_repository.dart';
 
 class RunningResultBloc extends Bloc<RunningResultEvent, RunningResultState> {
-  final RunningResultRepository firebaseRepo;
+  final FirebaseRunningRepository firebaseRepo;
 
   RunningResultBloc(this.firebaseRepo) : super(RunningResultInitial()) {
     on<SaveRunningResultEvent>(_onSaveResult);

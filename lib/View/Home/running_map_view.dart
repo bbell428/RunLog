@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
+import 'package:runlog/bloc/bloc/running_result_bloc.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
+import 'package:runlog/bloc/event/running_result_event.dart';
 import 'package:runlog/bloc/state/running_map_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -257,11 +259,13 @@ class _RunningMapViewState extends State<RunningMapView> {
                     final state =
                         context.read<RunningMapBloc>().state; // 이렇게 쓰면 된다.
                     if (state is RunningInProgress) {
-                      distance2 = state.distance;
-                      duration2 = state.duration;
+                      context.read<RunningResultBloc>().add(
+                        SaveRunningResultEvent(
+                          distance: state.distance,
+                          duration: state.duration,
+                        ),
+                      );
                     }
-                    print(distance2);
-                    print(duration2);
 
                     context.read<RunningMapBloc>().add(StopRunning());
                   },
