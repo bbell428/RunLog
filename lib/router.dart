@@ -1,8 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:runlog/View/Home/Running_map_view.dart';
 import 'package:runlog/View/Home/home_view.dart';
 import 'package:runlog/View/Marathon/marathon_view.dart';
 import 'package:runlog/View/Workout/workout_view.dart';
+import 'package:runlog/bloc/bloc/running_map_bloc.dart';
+import 'package:runlog/bloc/event/running_map_event.dart';
 import 'package:runlog/main_tab_View.dart';
 
 // 라우터 관리(go_router)
@@ -15,13 +18,25 @@ final GoRouter goRouter = GoRouter(
 
     // 홈 화면
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
+    
     // 런닝 맵 화면
-    GoRoute(path: '/runningMap', builder: (context, state) => const RunningMapView()),
+    GoRoute(
+      path: '/runningMap',
+      builder: (context, state) {
+        return BlocProvider(
+          create: (_) => RunningMapBloc()..add(GetCurrentLocationRequested()),
+          child: const RunningMapView(),
+        );
+      },
+    ),
 
     // 기록 화면
     GoRoute(path: '/workout', builder: (context, state) => const WorkoutView()),
 
     // 마라톤 일정 화면
-    GoRoute(path: '/marathon', builder: (context, state) => const MarathonView()),
+    GoRoute(
+      path: '/marathon',
+      builder: (context, state) => const MarathonView(),
+    ),
   ],
 );

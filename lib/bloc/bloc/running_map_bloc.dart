@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'event/running_map_event.dart';
-import 'state/running_map_state.dart';
+import '../event/running_map_event.dart';
+import '../state/running_map_state.dart';
 
 class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
   StreamSubscription<Position>? _positionSubscription;
