@@ -24,7 +24,7 @@ final GoRouter goRouter = GoRouter(
       path: '/runningMap',
       builder: (context, state) {
         return BlocProvider(
-          create: (_) => RunningMapBloc()..add(GetCurrentLocationRequested()),
+          create: (context) => RunningMapBloc()..add(GetCurrentLocationRequested()),
           child: const RunningMapView(),
         );
       },

@@ -1,4 +1,4 @@
-// 전체 파일: running_map_bloc.dart
+// bloc
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
