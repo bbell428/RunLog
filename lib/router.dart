@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:runlog/View/Home/Running_map_view.dart';
+import 'package:runlog/View/Login/login_view.dart';
 import 'package:runlog/View/Home/home_view.dart';
 import 'package:runlog/View/Marathon/marathon_view.dart';
 import 'package:runlog/View/Workout/workout_view.dart';
@@ -13,18 +14,21 @@ final GoRouter goRouter = GoRouter(
   initialLocation: '/', // 앱이 시작될 때 처음 보여줄 경로(화면)
   debugLogDiagnostics: true, // 라우팅 디버깅 로그 활성화
   routes: <RouteBase>[
+    GoRoute(path: '/', builder: (context, state) => const LoginView()),
+
     // 탭뷰 화면(초기)
-    GoRoute(path: '/', builder: (context, state) => const MainTabView()),
+    GoRoute(path: '/TabView', builder: (context, state) => const MainTabView()),
 
     // 홈 화면
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
-    
+
     // 런닝 맵 화면
     GoRoute(
       path: '/runningMap',
       builder: (context, state) {
         return BlocProvider(
-          create: (context) => RunningMapBloc()..add(GetCurrentLocationRequested()),
+          create:
+              (context) => RunningMapBloc()..add(GetCurrentLocationRequested()),
           child: const RunningMapView(),
         );
       },
