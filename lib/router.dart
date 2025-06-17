@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:runlog/View/Home/Running_map_view.dart';
+import 'package:runlog/View/Home/running_result_view.dart';
 import 'package:runlog/View/Login/login_view.dart';
 import 'package:runlog/View/Home/home_view.dart';
 import 'package:runlog/View/Marathon/marathon_view.dart';
@@ -30,6 +31,18 @@ final GoRouter goRouter = GoRouter(
           create:
               (context) => RunningMapBloc()..add(GetCurrentLocationRequested()),
           child: const RunningMapView(),
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/runningResult',
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>;
+
+        return RunningResultView(
+          distance: data['distance'] as double,
+          duration: data['duration'] as Duration,
         );
       },
     ),

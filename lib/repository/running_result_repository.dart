@@ -10,19 +10,16 @@ class FirebaseRunningRepository {
     required Duration duration,
   }) async {
     final now = DateTime.now();
-    final dateKey =
-        "${now.year}-${_twoDigits(now.month)}-${_twoDigits(now.day)}";
+    final date =
+        "${now.year}-${_twoDigits(now.month)}-${_twoDigits(now.day)}_${_twoDigits(now.hour)}:${_twoDigits(now.minute)}";
 
     try {
       await _db
           .collection('users')
           .doc(uid)
           .collection('results')
-          .doc(dateKey)
-          .set({
-            'distance': distance,
-            'duration': duration.inSeconds,
-          });
+          .doc(date)
+          .set({'distance': distance, 'duration': duration.inSeconds});
       print('Firestore 저장 성공: uid=$uid');
     } catch (e) {
       print('Firestore 저장 실패: $e');
