@@ -21,7 +21,7 @@ class _MyWidgetState extends State<HomeView> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is Unauthenticated) {
-          context.go('/login'); // ✅ 상태가 바뀐 후에 이동
+          context.go('/login');
         }
       },
 

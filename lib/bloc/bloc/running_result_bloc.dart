@@ -17,6 +17,7 @@ class RunningResultBloc extends Bloc<RunningResultEvent, RunningResultState> {
     emit(RunningResultSaving());
     try {
       await firebaseRepo.saveResult(
+        uid: event.uid,
         distance: event.distance,
         duration: event.duration,
       );

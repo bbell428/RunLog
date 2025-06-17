@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:runlog/bloc/bloc/auth_bloc.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/bloc/running_result_bloc.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
 import 'package:runlog/bloc/event/running_result_event.dart';
+import 'package:runlog/bloc/state/auth_state.dart';
 import 'package:runlog/bloc/state/running_map_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -255,11 +257,15 @@ class _RunningMapViewState extends State<RunningMapView> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    final state =
-                        context.read<RunningMapBloc>().state; // 이렇게 쓰면 된다.
-                    if (state is RunningInProgress) {
+                     // 이렇게 쓰면 된다.
+                    final state = context.read<RunningMapBloc>().state;
+                    final authState = context.read<AuthBloc>().state;
+                    
+                    if (state is RunningInProgress &&
+                        authState is Authenticated) {
                       context.read<RunningResultBloc>().add(
                         SaveRunningResultEvent(
+                          uid: authState.user.uid,
                           distance: state.distance,
                           duration: state.duration,
                         ),
