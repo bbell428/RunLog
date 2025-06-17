@@ -33,7 +33,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onGoogleSignInRequested(
-      GoogleSignInRequested event, Emitter<AuthState> emit) async {
+    GoogleSignInRequested event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(AuthLoading());
     try {
       final googleUser = await _googleSignIn.signIn();
@@ -65,7 +67,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignOutRequested(
-      SignOutRequested event, Emitter<AuthState> emit) async {
+    SignOutRequested event,
+    Emitter<AuthState> emit,
+  ) async {
     await _auth.signOut();
     await _googleSignIn.signOut();
     emit(Unauthenticated());

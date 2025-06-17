@@ -17,7 +17,7 @@ class LoginView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is Authenticated) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              context.push('/TabView');
+              context.go('/tabView');
             });
           } else if (state is AuthError) {
             return Center(child: Text(state.message));

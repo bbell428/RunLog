@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:runlog/bloc/bloc/auth_bloc.dart';
 import 'package:runlog/bloc/event/auth_event.dart';
+import 'package:runlog/bloc/state/auth_state.dart';
 import 'package:runlog/design.dart';
 
 class HomeView extends StatefulWidget {
@@ -68,6 +69,11 @@ class _MyWidgetState extends State<HomeView> {
                 },
                 child: const Text("로그아웃"),
               ),
+              if (authState is Authenticated) ...[
+                SizedBox(height: 10),
+                Text('이메일: ${authState.user.email}'),
+                Text('이름: ${authState.user.name}'),
+              ],
               SizedBox(height: Design.screenHeight(context) * 0.1),
             ],
           ),

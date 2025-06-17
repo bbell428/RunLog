@@ -11,13 +11,13 @@ import 'package:runlog/main_tab_View.dart';
 
 // 라우터 관리(go_router)
 final GoRouter goRouter = GoRouter(
-  initialLocation: '/', // 앱이 시작될 때 처음 보여줄 경로(화면)
+  initialLocation: '/login', // 앱이 시작될 때 처음 보여줄 경로(화면)
   debugLogDiagnostics: true, // 라우팅 디버깅 로그 활성화
   routes: <RouteBase>[
-    GoRoute(path: '/', builder: (context, state) => const LoginView()),
+    GoRoute(path: '/login', builder: (context, state) => const LoginView()),
 
     // 탭뷰 화면(초기)
-    GoRoute(path: '/TabView', builder: (context, state) => const MainTabView()),
+    GoRoute(path: '/tabView', builder: (context, state) => const MainTabView()),
 
     // 홈 화면
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
