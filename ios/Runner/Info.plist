@@ -2,6 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<!--위치-->
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>앱이 백그라운드에서도 위치 정보를 사용합니다</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>앱이 실행 중일 때 위치 정보를 사용합니다.</string>
+	<!-- 외부 URL -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array><string>https</string></array>
+	<!-- Firebase Google Login  -->
+	<key>GIDClientID</key>
+	<string>476788682886-rk2bscd9ve82pl6mpqa3etiua164hju1.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.476788682886-rk2bscd9ve82pl6mpqa3etiua164hju1</string>
+			</array>
+		</dict>
+	</array>
+	<!--  -->
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
