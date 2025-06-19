@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:runlog/bloc/bloc/auth_bloc.dart';
 import 'package:runlog/bloc/bloc/running_result_bloc.dart';
 import 'package:runlog/bloc/event/auth_event.dart';
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await initializeDateFormatting('ko_KR', null);
   runApp(const MyApp());
 }
 
