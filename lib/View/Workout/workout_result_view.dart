@@ -3,21 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:runlog/bloc/bloc/auth_bloc.dart';
 import 'package:runlog/bloc/state/auth_state.dart';
 import 'package:runlog/bloc/bloc/workout_result_bloc.dart';
 import 'package:runlog/bloc/event/workout_result_event.dart';
 import 'package:runlog/bloc/state/workout_result_state.dart';
 
-class WorkoutView extends StatefulWidget {
-  const WorkoutView({super.key});
+class WorkoutResultView extends StatefulWidget {
+  const WorkoutResultView({super.key});
 
   @override
-  State<WorkoutView> createState() => _WorkoutViewState();
+  State<WorkoutResultView> createState() => WorkoutResultViewState();
 }
 
-class _WorkoutViewState extends State<WorkoutView> {
+class WorkoutResultViewState extends State<WorkoutResultView> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
