@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MarathonView extends StatelessWidget {
-  const MarathonView({super.key});
+class WeatherView extends StatelessWidget {
+  const WeatherView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('마라톤 대회'),
+        title: Text('날씨'),
       ),
     );
   }

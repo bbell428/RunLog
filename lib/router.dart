@@ -3,7 +3,7 @@ import 'package:runlog/View/Home/Running_map_view.dart';
 import 'package:runlog/View/Home/running_result_view.dart';
 import 'package:runlog/View/Login/login_view.dart';
 import 'package:runlog/View/Home/home_view.dart';
-import 'package:runlog/View/Marathon/marathon_view.dart';
+import 'package:runlog/View/Weather/weather_view.dart';
 import 'package:runlog/View/Workout/workout_result_view.dart';
 import 'package:runlog/main_tab_View.dart';
 
@@ -42,7 +42,7 @@ final GoRouter goRouter = GoRouter(
     // 마라톤 일정 화면
     GoRoute(
       path: '/marathon',
-      builder: (context, state) => const MarathonView(),
+      builder: (context, state) => const WeatherView(),
     ),
   ],
 );

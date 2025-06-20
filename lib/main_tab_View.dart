@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:runlog/View/Home/home_view.dart';
-import 'package:runlog/View/Marathon/marathon_view.dart';
+import 'package:runlog/View/Weather/weather_view.dart';
 import 'package:runlog/View/Workout/workout_result_view.dart';
 
 class MainTabView extends StatefulWidget {
@@ -16,7 +16,7 @@ class _MyWidgetState extends State<MainTabView> {
   final List<Widget> _screens = [
     HomeView(),
     WorkoutResultView(),
-    MarathonView(),
+    WeatherView(),
   ];
 
   void _onTabTapped(int index) {
