@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:runlog/bloc/bloc/auth_bloc.dart';
+import 'package:runlog/bloc/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/bloc/running_result_bloc.dart';
+import 'package:runlog/bloc/bloc/workout_result_bloc.dart';
 import 'package:runlog/bloc/event/auth_event.dart';
+import 'package:runlog/bloc/event/running_map_event.dart';
 import 'package:runlog/firebase_options.dart';
 import 'package:runlog/repository/running_result_repository.dart';
 import 'package:runlog/router.dart';
@@ -29,6 +32,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => RunningResultBloc(firebaseRepo)),
         BlocProvider(create: (context) => AuthBloc()..add(AppStarted())),
+        BlocProvider(create: (context) => RunningMapBloc()..add(GetCurrentLocationRequested())),
+        BlocProvider(create: (context) => WorkoutResultBloc(FirebaseRunningRepository())),
       ],
 
       child: MaterialApp.router(

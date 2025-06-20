@@ -3,12 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:runlog/bloc/bloc/auth_bloc.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
-import 'package:runlog/bloc/bloc/running_result_bloc.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
-import 'package:runlog/bloc/event/running_result_event.dart';
-import 'package:runlog/bloc/state/auth_state.dart';
 import 'package:runlog/bloc/state/running_map_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -24,17 +24,9 @@ final GoRouter goRouter = GoRouter(
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
 
     // 런닝 맵 화면
-    GoRoute(
-      path: '/runningMap',
-      builder: (context, state) {
-        return BlocProvider(
-          create:
-              (context) => RunningMapBloc()..add(GetCurrentLocationRequested()),
-          child: const RunningMapView(),
-        );
-      },
-    ),
+    GoRoute(path: '/runningMap', builder: (context, state) => const RunningMapView()),
 
+    // 런닝 결과 화면
     GoRoute(
       path: '/runningResult',
       builder: (context, state) {
