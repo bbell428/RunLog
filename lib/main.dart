@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => RunningResultBloc(firebaseRepo)),
         BlocProvider(create: (context) => AuthBloc()..add(AppStarted())),
-        BlocProvider(create: (context) => RunningMapBloc()..add(GetCurrentLocationRequested())),
+        // BlocProvider(create: (context) => RunningMapBloc()..add(GetCurrentLocationRequested())),
         BlocProvider(create: (context) => WorkoutResultBloc(FirebaseRunningRepository())),
-        BlocProvider(create: (_) => WeatherBloc(weatherRepository)..add(FetchWeather())),
+        BlocProvider(create: (context) => WeatherBloc(weatherRepository)..add(FetchWeather())),
       ],
 
       child: MaterialApp.router(
