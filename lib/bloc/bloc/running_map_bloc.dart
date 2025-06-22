@@ -54,7 +54,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
       _positionSubscription = Geolocator.getPositionStream(
         locationSettings: const LocationSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 5,
+          distanceFilter: 8,
         ),
       ).listen((Position position) {
         add(
@@ -75,6 +75,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
       if (_path.isNotEmpty) {
         final prev = _path.last;
         final meter = const Distance().as(LengthUnit.Meter, prev, current);
+        if (meter < 8) return; // 노이즈 제거 (8m 이상 이동 시만 저장)
         _distance += meter;
       }
       _path.add(current);
@@ -89,7 +90,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     _path = [];
     _distance = 0;
 
-    _timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       add(Tick());
     });
   }

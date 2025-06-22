@@ -1,4 +1,4 @@
-import 'package:runlog/Model/user_model.dart';
+import 'package:runlog/model/user_model.dart';
 
 abstract class AuthState {}
 
