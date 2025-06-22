@@ -259,7 +259,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                     if (isRunning)
                       ElevatedButton(
                         onPressed: () async {
-                          final shouldStop = showConfirmDialog(
+                          final shouldStop = await showConfirmDialog(
                             context: context,
                             title: '런닝 종료',
                             content: '정말 종료하시겠습니까?',

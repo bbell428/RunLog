@@ -15,11 +15,11 @@ Future<bool> showConfirmDialog({
           content: Text(content),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
+              onPressed: () => Navigator.pop(context, false),
               child: Text(cancelText),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () => Navigator.pop(context, true),
               child: Text(confirmText),
             ),
           ],
