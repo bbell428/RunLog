@@ -1,13 +1,13 @@
 class WeatherModel {
   final String cityName;
   final double temperature;
-  final String weatherMain;
+  final String description;
   final int humidity;
 
   WeatherModel({
     required this.cityName,
     required this.temperature,
-    required this.weatherMain,
+    required this.description,
     required this.humidity,
   });
 
@@ -15,7 +15,7 @@ class WeatherModel {
     return WeatherModel(
       cityName: json['name'],
       temperature: json['main']['temp'].toDouble(),
-      weatherMain: json['weather'][0]['main'],
+      description: json['weather'][0]['description'],
       humidity: json['main']['humidity'],
     );
   }

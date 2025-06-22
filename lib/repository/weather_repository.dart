@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:runlog/Model/weather_model.dart';
 
 class WeatherRepository {
   final apiKey = dotenv.env['Weather_API_KEY'] ?? 'no_key';
@@ -26,16 +27,16 @@ class WeatherRepository {
     );
   }
 
-  Future<Map<String, dynamic>> fetchWeather(double lat, double lon) async {
-    final url =
-        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$apiKey';
-    print("요청 URL: $url");
-    final response = await http.get(Uri.parse(url));
+  Future<WeatherModel> fetchWeather(double lat, double lon) async {
+    final uri = Uri.parse(
+      'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&lang=kr&appid=$apiKey',
+    );
 
+    final response = await http.get(uri);
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      return WeatherModel.fromJson(jsonDecode(response.body));
     } else {
-      throw Exception("날씨 정보를 불러올 수 없음");
+      throw Exception('날씨 정보 불러오기 실패');
     }
   }
 }

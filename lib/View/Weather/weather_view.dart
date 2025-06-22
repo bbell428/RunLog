@@ -54,7 +54,7 @@ class WeatherView extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          "날씨: ${weather.weatherMain}",
+                          "날씨: ${weather.description}",
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
