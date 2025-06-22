@@ -90,6 +90,11 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     _path = [];
     _distance = 0;
 
+    // 시작할 때 현재 위치가 있으면 path에 추가
+    if (state is RunningMapLoaded) {
+      _path.add((state as RunningMapLoaded).currentPosition);
+    }
+
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       add(Tick());
     });
@@ -102,16 +107,23 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
   }
 
   void _onTick(Tick event, Emitter<RunningMapState> emit) {
-    if (_path.isEmpty || !_isRunning || _startTime == null) return;
+    if (!_isRunning || _startTime == null) return;
+
     final duration = DateTime.now().difference(_startTime!);
-    emit(
-      RunningInProgress(
-        path: List.from(_path),
-        distance: _distance,
-        duration: duration,
-        currentPosition: _path.last,
-      ),
-    );
+
+    // 위치가 없으면 기본값(0,0) 또는 null처리 가능
+    final currentPos = _path.isNotEmpty ? _path.last : null;
+
+    if (currentPos != null) {
+      emit(
+        RunningInProgress(
+          path: List.from(_path),
+          distance: _distance,
+          duration: duration,
+          currentPosition: currentPos,
+        ),
+      );
+    }
   }
 
   @override
