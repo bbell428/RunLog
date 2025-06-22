@@ -56,9 +56,9 @@ final GoRouter goRouter = GoRouter(
       builder: (context, state) => const WorkoutResultView(),
     ),
 
-    // 마라톤 일정 화면
+    // 날씨 화면
     GoRoute(
-      path: '/marathon',
+      path: '/weather',
       builder: (context, state) => const WeatherView(),
     ),
   ],

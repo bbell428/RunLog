@@ -26,14 +26,14 @@ class RunningResultView extends StatelessWidget {
       body: BlocListener<RunningResultBloc, RunningResultState>(
         listener: (context, state) {
           if (state is RunningResultSaved) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('기록 완료')),
-            );
-            context.go('/home');
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('기록 완료')));
+            context.go('/tabView');
           } else if (state is RunningResultError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         child: Column(
