@@ -1,23 +1,28 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:runlog/bloc/bloc/auth_bloc.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/bloc/running_result_bloc.dart';
+import 'package:runlog/bloc/bloc/weather_bloc.dart';
 import 'package:runlog/bloc/bloc/workout_result_bloc.dart';
 import 'package:runlog/bloc/event/auth_event.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
+import 'package:runlog/bloc/event/weather_event.dart';
 import 'package:runlog/firebase_options.dart';
 import 'package:runlog/repository/running_result_repository.dart';
+import 'package:runlog/repository/weather_repository.dart';
 import 'package:runlog/router.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await initializeDateFormatting('ko_KR', null);
+  await dotenv.load(fileName: 'assets/.env');
   runApp(const MyApp());
 }
 
@@ -27,6 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseRepo = FirebaseRunningRepository();
+    final WeatherRepository weatherRepository = WeatherRepository();
 
     return MultiBlocProvider(
       providers: [
@@ -34,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthBloc()..add(AppStarted())),
         BlocProvider(create: (context) => RunningMapBloc()..add(GetCurrentLocationRequested())),
         BlocProvider(create: (context) => WorkoutResultBloc(FirebaseRunningRepository())),
+        BlocProvider(create: (_) => WeatherBloc(weatherRepository)..add(FetchWeather())),
       ],
 
       child: MaterialApp.router(
