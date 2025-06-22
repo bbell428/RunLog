@@ -241,37 +241,41 @@ class _RunningMapViewState extends State<RunningMapView> {
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<RunningMapBloc>().add(
-                      StartRunning(),
-                    ); // 실시간 변화
-                  },
-                  child: const Text("운동 시작"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // 이렇게 쓰면 된다.
-                    final state = context.read<RunningMapBloc>().state;
+            child: BlocBuilder<RunningMapBloc, RunningMapState>(
+              builder: (context, state) {
+                final isRunning = state is RunningInProgress;
 
-                    if (state is RunningInProgress) {
-                      context.push(
-                        '/runningResult',
-                        extra: {
-                          'distance': state.distance,
-                          'duration': state.duration,
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (!isRunning)
+                      ElevatedButton(
+                        onPressed: () {
+                          context.read<RunningMapBloc>().add(StartRunning());
                         },
-                      );
-                    }
-
-                    context.read<RunningMapBloc>().add(StopRunning());
-                  },
-                  child: const Text("운동 종료"),
-                ),
-              ],
+                        child: const Text("런닝 시작"),
+                      ),
+                    if (isRunning)
+                      ElevatedButton(
+                        onPressed: () {
+                          final runningState =
+                              context.read<RunningMapBloc>().state;
+                          if (runningState is RunningInProgress) {
+                            context.push(
+                              '/runningResult',
+                              extra: {
+                                'distance': runningState.distance,
+                                'duration': runningState.duration,
+                              },
+                            );
+                          }
+                          context.read<RunningMapBloc>().add(StopRunning());
+                        },
+                        child: const Text("런닝 종료"),
+                      ),
+                  ],
+                );
+              },
             ),
           ),
         ],

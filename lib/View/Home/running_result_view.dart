@@ -37,7 +37,7 @@ class RunningResultView extends StatelessWidget {
                 );
               }
             },
-            child: const Text("운동 종료"),
+            child: const Text("기록하기"),
           ),
         ],
       ),
