@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:runlog/View/Home/Running_map_view.dart';
-import 'package:runlog/View/Home/running_result_view.dart';
-import 'package:runlog/View/Login/login_view.dart';
-import 'package:runlog/View/Home/home_view.dart';
-import 'package:runlog/View/Weather/weather_view.dart';
-import 'package:runlog/View/Workout/workout_result_view.dart';
+import 'package:runlog/view/Home/Running_map_view.dart';
+import 'package:runlog/view/home/running_result_view.dart';
+import 'package:runlog/view/login/login_view.dart';
+import 'package:runlog/view/home/home_view.dart';
+import 'package:runlog/view/weather/weather_view.dart';
+import 'package:runlog/view/workout/workout_result_view.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
 import 'package:runlog/main_tab_View.dart';

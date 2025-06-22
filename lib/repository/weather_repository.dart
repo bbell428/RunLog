@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:runlog/Model/weather_model.dart';
+import 'package:runlog/model/weather_model.dart';
 
 class WeatherRepository {
   final apiKey = dotenv.env['Weather_API_KEY'] ?? 'no_key';

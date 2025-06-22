@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:runlog/View/Home/home_view.dart';
-import 'package:runlog/View/Weather/weather_view.dart';
-import 'package:runlog/View/Workout/workout_result_view.dart';
+import 'package:runlog/view/home/home_view.dart';
+import 'package:runlog/view/weather/weather_view.dart';
+import 'package:runlog/view/workout/workout_result_view.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key});

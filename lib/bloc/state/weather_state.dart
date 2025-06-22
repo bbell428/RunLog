@@ -1,4 +1,4 @@
-import 'package:runlog/Model/weather_model.dart';
+import 'package:runlog/model/weather_model.dart';
 
 abstract class WeatherState {}
 
