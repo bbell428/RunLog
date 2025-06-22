@@ -38,7 +38,7 @@ class RunningResultView extends StatelessWidget {
         },
         child: Column(
           children: [
-            Text('거리: ${distance.toStringAsFixed(2)} km'),
+            Text('거리: ${distance.toStringAsFixed(2)} m'),
             Text('시간: ${duration.inMinutes}분 ${duration.inSeconds % 60}초'),
             ElevatedButton(
               onPressed: () {
