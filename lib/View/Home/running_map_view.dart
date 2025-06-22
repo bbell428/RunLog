@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
 import 'package:runlog/bloc/state/running_map_state.dart';
+import 'package:runlog/confirm_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RunningMapView extends StatefulWidget {
@@ -257,19 +258,29 @@ class _RunningMapViewState extends State<RunningMapView> {
                       ),
                     if (isRunning)
                       ElevatedButton(
-                        onPressed: () {
-                          final runningState =
-                              context.read<RunningMapBloc>().state;
-                          if (runningState is RunningInProgress) {
-                            context.push(
-                              '/runningResult',
-                              extra: {
-                                'distance': runningState.distance,
-                                'duration': runningState.duration,
-                              },
-                            );
+                        onPressed: () async {
+                          final shouldStop = showConfirmDialog(
+                            context: context,
+                            title: '런닝 종료',
+                            content: '정말 종료하시겠습니까?',
+                            cancelText: '취소',
+                            confirmText: '종료',
+                          );
+
+                          if (shouldStop == true) {
+                            final runningState =
+                                context.read<RunningMapBloc>().state;
+                            if (runningState is RunningInProgress) {
+                              context.push(
+                                '/runningResult',
+                                extra: {
+                                  'distance': runningState.distance,
+                                  'duration': runningState.duration,
+                                },
+                              );
+                            }
+                            context.read<RunningMapBloc>().add(StopRunning());
                           }
-                          context.read<RunningMapBloc>().add(StopRunning());
                         },
                         child: const Text("런닝 종료"),
                       ),
