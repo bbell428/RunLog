@@ -23,7 +23,7 @@ final GoRouter goRouter = GoRouter(
     // 홈 화면
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
 
-    // 런닝 맵 화면
+    // 러닝 맵 화면
     GoRoute(
       path: '/runningMap',
       builder: (context, state) {
@@ -37,7 +37,7 @@ final GoRouter goRouter = GoRouter(
       },
     ),
 
-    // 런닝 결과 화면
+    // 러닝 결과 화면
     GoRoute(
       path: '/runningResult',
       builder: (context, state) {

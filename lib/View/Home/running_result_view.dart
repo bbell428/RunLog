@@ -22,7 +22,7 @@ class RunningResultView extends StatelessWidget {
     final authState = context.read<AuthBloc>().state;
 
     return Scaffold(
-      appBar: AppBar(title: Text('런닝 결과')),
+      appBar: AppBar(title: Text('러닝 결과')),
       body: BlocListener<RunningResultBloc, RunningResultState>(
         listener: (context, state) {
           if (state is RunningResultSaved) {

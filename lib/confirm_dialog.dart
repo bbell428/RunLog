@@ -37,7 +37,7 @@ void showExitDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) => AlertDialog(
       title: const Text('나가기'),
-      content: const Text('정말 런닝을 종료하고 나가시겠습니까?'),
+      content: const Text('정말 러닝을 종료하고 나가시겠습니까?'),
       actions: <Widget>[
         TextButton(
           onPressed: () => context.pop(), // 알럿 닫기

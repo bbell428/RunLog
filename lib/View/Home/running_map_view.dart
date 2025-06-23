@@ -32,7 +32,7 @@ class _RunningMapViewState extends State<RunningMapView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('런닝')),
+        appBar: AppBar(title: const Text('러닝')),
         body: Column(
           children: [
             Expanded(
@@ -140,7 +140,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                               ],
                             ),
                           ),
-                        // 런닝 시작 및 종료 버튼
+                        // 러닝 시작 및 종료 버튼
                         if (state is RunningMapLoaded ||
                             state is RunningInProgress)
                           Positioned(
@@ -173,7 +173,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                                       isRunning ? Icons.stop : Icons.play_arrow,
                                     ),
                                     label: Text(
-                                      isRunning ? '런닝 종료' : '런닝 시작',
+                                      isRunning ? '러닝 종료' : '러닝 시작',
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                     onPressed: () async {
@@ -185,7 +185,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                                         final shouldStop =
                                             await showConfirmDialog(
                                               context: context,
-                                              title: '런닝 종료',
+                                              title: '러닝 종료',
                                               content: '정말 종료하시겠습니까?',
                                               cancelText: '취소',
                                               confirmText: '종료',

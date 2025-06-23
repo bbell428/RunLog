@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:runlog/back/service_initializer.dart';
+import 'package:runlog/repository/background/service_initializer.dart';
 import 'package:runlog/bloc/bloc/auth_bloc.dart';
 import 'package:runlog/bloc/bloc/running_result_bloc.dart';
 import 'package:runlog/bloc/bloc/weather_bloc.dart';
