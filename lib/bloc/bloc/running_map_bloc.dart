@@ -1,5 +1,6 @@
 // bloc
 import 'dart:async';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -84,21 +85,35 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     }
   }
 
-  void _onStartRunning(StartRunning event, Emitter<RunningMapState> emit) {
+  void _onStartRunning(
+    StartRunning event,
+    Emitter<RunningMapState> emit,
+  ) async {
     _isRunning = true;
     _startTime = DateTime.now();
     _path = [];
     _distance = 0;
 
+    await FlutterBackgroundService().startService();
+
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       add(Tick());
     });
+
+    // 위치 업데이트 리스너 등록
+    FlutterBackgroundService().on('locationUpdated').listen((data) {
+      if (data != null) {
+        final lat = data['lat'];
+        final lng = data['lng'];
+        add(RunningLocationChanged(LatLng(lat, lng)));
+      }
+    });
   }
 
-  void _onStopRunning(StopRunning event, Emitter<RunningMapState> emit) {
+  void _onStopRunning(StopRunning event, Emitter<RunningMapState> emit) async {
     _isRunning = false;
     _timer?.cancel();
-    // emit(RunningMapInitial());
+    FlutterBackgroundService().invoke("stopService");
   }
 
   void _onTick(Tick event, Emitter<RunningMapState> emit) {
