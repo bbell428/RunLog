@@ -77,6 +77,7 @@ class WorkoutResultViewState extends State<WorkoutResultView> {
                       });
                     },
                     eventLoader: (day) => _getEventsForDay(day, resultMap),
+                    rowHeight: 38, // 달력 크기
                     calendarBuilders: CalendarBuilders(
                       markerBuilder: (context, day, events) {
                         if (events.isNotEmpty) {
@@ -96,7 +97,7 @@ class WorkoutResultViewState extends State<WorkoutResultView> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  Divider(),
                   if (selectedEvents.isNotEmpty)
                     Expanded(
                       child: ListView.builder(
@@ -109,25 +110,29 @@ class WorkoutResultViewState extends State<WorkoutResultView> {
                           final distance = record['distance'];
                           final formattedPace = record['formattedPace'];
                           final recordTime = record['recordTime'];
-                          return ListTile(
-                            title: Text('$recordTime'),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (distance >= 1000) ...{
+                          return Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ListTile(
+                              title: Text('$recordTime'),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (distance >= 1000) ...{
+                                    Text(
+                                      '거리: ${(distance / 1000).toStringAsFixed(2)}km',
+                                    ),
+                                  } else ...{
+                                    Text('거리: ${distance.toStringAsFixed(0)}m'),
+                                  },
                                   Text(
-                                    '거리: ${(distance / 1000).toStringAsFixed(2)}km',
+                                    '시간: ${duration.inMinutes}분 ${duration.inSeconds % 60}초',
                                   ),
-                                } else ...{
-                                  Text(
-                                    '거리: ${distance.toStringAsFixed(0)}m',
-                                  ),
-                                },
-                                Text(
-                                  '시간: ${duration.inMinutes}분 ${duration.inSeconds % 60}초',
-                                ),
-                                Text('평균 페이스: $formattedPace'),
-                              ],
+                                  Text('평균 페이스: $formattedPace'),
+                                ],
+                              ),
                             ),
                           );
                         },
