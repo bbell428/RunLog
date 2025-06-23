@@ -45,7 +45,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                           (state is RunningMapLoaded)
                               ? state.currentPosition
                               : (state as RunningInProgress).currentPosition;
-                      mapController.move(pos, 16.0);
+                      mapController.move(pos, 18.0);
                     });
                   }
                 },
@@ -68,7 +68,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                           mapController: mapController,
                           options: MapOptions(
                             initialCenter: pos,
-                            initialZoom: 16.0,
+                            initialZoom: 18.0,
                           ),
                           children: [
                             TileLayer(
@@ -81,7 +81,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                                 polylines: [
                                   Polyline(
                                     points: path.whereType<LatLng>().toList(),
-                                    strokeWidth: 4.0,
+                                    strokeWidth: 5.0,
                                     color: Colors.blue,
                                   ),
                                 ],
@@ -120,7 +120,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                           right: 10,
                           child: FloatingActionButton(
                             mini: true,
-                            onPressed: () => mapController.move(pos, 16.0),
+                            onPressed: () => mapController.move(pos, 18.0),
                             child: const Icon(Icons.my_location),
                           ),
                         ),
