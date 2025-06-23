@@ -31,11 +31,10 @@ class LoginView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/images/running.png', height: 180),
-                  const SizedBox(height: 16),
                   const Text(
-                    '러닝 기록',
+                    'RunLog',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold,
                       color: Colors.blueAccent,
                     ),
@@ -47,16 +46,17 @@ class LoginView extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 40),
-                  InkWell(
-                    onTap: () {
-                      context.read<AuthBloc>().add(GoogleSignInRequested());
-                    },
-                    child: Ink(
-                      child: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Image.asset('assets/images/GoogleLogin.png'),
-                        ],
+                  Material(
+                    color: Colors.transparent, // 배경이 비치게
+                    child: InkWell(
+                      onTap: () {
+                        context.read<AuthBloc>().add(GoogleSignInRequested());
+                      },
+                      child: Ink(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Image.asset('assets/images/GoogleLogin.png'),
+                        ),
                       ),
                     ),
                   ),
