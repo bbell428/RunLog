@@ -4,7 +4,7 @@ import 'package:runlog/view/Home/Running_map_view.dart';
 import 'package:runlog/view/home/running_result_view.dart';
 import 'package:runlog/view/login/login_view.dart';
 import 'package:runlog/view/home/home_view.dart';
-import 'package:runlog/view/weather/weather_view.dart';
+import 'package:runlog/view/home/weather/weather_view.dart';
 import 'package:runlog/view/workout/workout_result_view.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';

@@ -35,3 +35,5 @@ flutter:
   assets:
     - assets/images/running.png
     - assets/.env
+    - assets/images/RunLog.png
+    - assets/images/GoogleLogin.png
