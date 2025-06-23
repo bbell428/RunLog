@@ -96,13 +96,30 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     _path = [];
     _distance = 0;
 
-    await FlutterBackgroundService().startService();
+    // 백그라운드 먼저 실행 (await 제거 → 비동기 처리)
+    FlutterBackgroundService().startService();
 
+    // 바로 위치 한 번 수동으로 받아오기 (빠르게 시작)
+    try {
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      final current = LatLng(position.latitude, position.longitude);
+      _path.add(current);
+    } catch (e) {
+      emit(RunningMapError("초기 위치를 가져오지 못했습니다."));
+      return;
+    }
+
+    // 바로 Tick 발생시켜서 초기 상태 보여주기
+    add(Tick());
+
+    // 타이머 시작
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       add(Tick());
     });
 
-    // 위치 업데이트 리스너 등록
+    // 백그라운드 위치 업데이트 리스너 등록
     FlutterBackgroundService().on('locationUpdated').listen((data) {
       if (data != null) {
         final lat = data['lat'];
