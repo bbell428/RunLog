@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:runlog/view/home/home_view.dart';
-import 'package:runlog/view/weather/weather_view.dart';
+import 'package:runlog/view/setting/setting_view.dart';
 import 'package:runlog/view/workout/workout_result_view.dart';
 
 class MainTabView extends StatefulWidget {
@@ -16,7 +16,7 @@ class _MyWidgetState extends State<MainTabView> {
   final List<Widget> _screens = [
     HomeView(),
     WorkoutResultView(),
-    WeatherView(),
+    SettingView(),
   ];
 
   void _onTabTapped(int index) {
@@ -28,7 +28,7 @@ class _MyWidgetState extends State<MainTabView> {
   final List<BottomNavigationBarItem> _bottomNavItems = const [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
     BottomNavigationBarItem(icon: Icon(Icons.directions_run), label: '기록'),
-    BottomNavigationBarItem(icon: Icon(Icons.event), label: '마라톤'),
+    BottomNavigationBarItem(icon: Icon(Icons.event), label: '설정'),
   ];
 
   @override

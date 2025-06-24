@@ -4,7 +4,7 @@ import 'package:runlog/view/Home/Running_map_view.dart';
 import 'package:runlog/view/home/running_result_view.dart';
 import 'package:runlog/view/login/login_view.dart';
 import 'package:runlog/view/home/home_view.dart';
-import 'package:runlog/view/weather/weather_view.dart';
+import 'package:runlog/view/home/weather/weather_view.dart';
 import 'package:runlog/view/workout/workout_result_view.dart';
 import 'package:runlog/bloc/bloc/running_map_bloc.dart';
 import 'package:runlog/bloc/event/running_map_event.dart';
@@ -23,7 +23,7 @@ final GoRouter goRouter = GoRouter(
     // 홈 화면
     GoRoute(path: '/home', builder: (context, state) => const HomeView()),
 
-    // 런닝 맵 화면
+    // 러닝 맵 화면
     GoRoute(
       path: '/runningMap',
       builder: (context, state) {
@@ -37,7 +37,7 @@ final GoRouter goRouter = GoRouter(
       },
     ),
 
-    // 런닝 결과 화면
+    // 러닝 결과 화면
     GoRoute(
       path: '/runningResult',
       builder: (context, state) {
@@ -54,12 +54,6 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
       path: '/workout',
       builder: (context, state) => const WorkoutResultView(),
-    ),
-
-    // 날씨 화면
-    GoRoute(
-      path: '/weather',
-      builder: (context, state) => const WeatherView(),
     ),
   ],
 );

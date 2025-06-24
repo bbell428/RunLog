@@ -22,6 +22,9 @@ class _RunningMapViewState extends State<RunningMapView> {
   double distance2 = 0.0; // 거리 할당
   late Duration duration2; // 시간 할당
 
+  // 지도 리셋 방지(자동 이동 해제) - 러닝 시작 시, 지도 건들면 리셋
+  bool shouldAutoCenter = true;
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -32,20 +35,21 @@ class _RunningMapViewState extends State<RunningMapView> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('런닝')),
+        appBar: AppBar(title: const Text('러닝')),
         body: Column(
           children: [
             Expanded(
               flex: 3,
               child: BlocConsumer<RunningMapBloc, RunningMapState>(
                 listener: (context, state) {
-                  if (state is RunningMapLoaded || state is RunningInProgress) {
+                  if (state is RunningMapLoaded ||
+                      state is RunningInProgress && shouldAutoCenter) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       final pos =
                           (state is RunningMapLoaded)
                               ? state.currentPosition
                               : (state as RunningInProgress).currentPosition;
-                      mapController.move(pos, 16.0);
+                      mapController.move(pos, 18.0);
                     });
                   }
                 },
@@ -68,7 +72,14 @@ class _RunningMapViewState extends State<RunningMapView> {
                           mapController: mapController,
                           options: MapOptions(
                             initialCenter: pos,
-                            initialZoom: 16.0,
+                            initialZoom: 18.0,
+                            onPositionChanged: (position, bool hasGesture) {
+                              if (hasGesture) {
+                                setState(() {
+                                  shouldAutoCenter = false;
+                                });
+                              }
+                            },
                           ),
                           children: [
                             TileLayer(
@@ -120,7 +131,10 @@ class _RunningMapViewState extends State<RunningMapView> {
                           right: 10,
                           child: FloatingActionButton(
                             mini: true,
-                            onPressed: () => mapController.move(pos, 16.0),
+                            onPressed: () {
+                              mapController.move(pos, 18.0);
+                              shouldAutoCenter = true;
+                            },
                             child: const Icon(Icons.my_location),
                           ),
                         ),
@@ -128,19 +142,38 @@ class _RunningMapViewState extends State<RunningMapView> {
                           Positioned(
                             top: 16,
                             left: 16,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "거리: ${state.distance.toStringAsFixed(1)} m",
-                                ),
-                                Text(
-                                  "시간: ${state.duration.inMinutes}분 ${state.duration.inSeconds % 60}초",
-                                ),
-                              ],
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withValues(alpha: 0.8),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "거리: ${state.distance.toStringAsFixed(1)} m",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    "시간: ${state.duration.inMinutes}분 ${state.duration.inSeconds % 60}초",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        // 런닝 시작 및 종료 버튼
+                        // 러닝 시작 및 종료 버튼
                         if (state is RunningMapLoaded ||
                             state is RunningInProgress)
                           Positioned(
@@ -173,7 +206,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                                       isRunning ? Icons.stop : Icons.play_arrow,
                                     ),
                                     label: Text(
-                                      isRunning ? '런닝 종료' : '런닝 시작',
+                                      isRunning ? '러닝 종료' : '러닝 시작',
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                     onPressed: () async {
@@ -185,7 +218,7 @@ class _RunningMapViewState extends State<RunningMapView> {
                                         final shouldStop =
                                             await showConfirmDialog(
                                               context: context,
-                                              title: '런닝 종료',
+                                              title: '러닝 종료',
                                               content: '정말 종료하시겠습니까?',
                                               cancelText: '취소',
                                               confirmText: '종료',
