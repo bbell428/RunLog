@@ -57,14 +57,14 @@
 ## 라이브러리
 | 카테고리 | 이름 | 버전 |
 |----------|------|-------|
-| 상태관리 | `flutter_bloc` | ^9.1.1 |
-| 라우팅 | `go_router` | ^15.1.2 |
-| 위치기반 | `geolocator` / `flutter_map` / `latlong2` | ^14.0.1 / ^8.1.1 / ^0.9.1 |
-| 인증/데이터베이스 | `firebase_auth` / `cloud_firestore` / `google_sign_in` / `firebase_core` | ^5.5.4 / ^5.6.8 / ^6.3.0 / ^3.13.1 |
-| 환경 변수 관리 | `flutter_dotenv` | ^5.2.1 |
-| 달력 및 날짜 처리 | `table_calendar` / `intl` | ^3.2.0 / ^0.20.2 |
-| 네트워크 통신 | `http` | ^1.4.0 |
-| 기타 | `url_launcher` | ^6.3.1 |
+| 상태관리 | `flutter_bloc` | 9.1.1 |
+| 라우팅 | `go_router` | 15.1.2 |
+| 위치기반 | `geolocator` / `flutter_map` / `latlong2` | 14.0.1 / 8.1.1 / 0.9.1 |
+| 인증/데이터베이스 | `firebase_auth` / `cloud_firestore` / `google_sign_in` / `firebase_core` | 5.5.4 / 5.6.8 / 6.3.0 / 3.13.1 |
+| 환경 변수 관리 | `flutter_dotenv` | 5.2.1 |
+| 달력 및 날짜 처리 | `table_calendar` / `intl` | 3.2.0 / 0.20.2 |
+| 네트워크 통신 | `http` | 1.4.0 |
+| 기타 | `url_launcher` | 6.3.1 |
 
 <br>
 
