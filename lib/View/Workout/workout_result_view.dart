@@ -82,7 +82,7 @@ class WorkoutResultViewState extends State<WorkoutResultView> {
                       markerBuilder: (context, day, events) {
                         if (events.isNotEmpty) {
                           return Positioned(
-                            bottom: 1,
+                            bottom: -1,
                             child: Container(
                               width: 6,
                               height: 6,
