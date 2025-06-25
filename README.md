@@ -1,4 +1,4 @@
-# 🏃 RunLog
+<img width="96" alt="Image" src="https://github.com/user-attachments/assets/d2722111-1e07-4e2b-b476-ae723188e942" />
 
 러닝 여부 확인 및 기록 앱입니다.  
 날씨 정보와 함께 러닝 경로를 기록하고, 평균 페이스와 소요 시간 등 다양한 운동 데이터를 제공합니다.
@@ -42,6 +42,12 @@
 - ✅ 위치 추적 및 실시간 경로 시각화
 - ✅ 러닝 요약 정보 표시
 - ✅ 날씨 정보 및 날씨 기반 조언 제공
+
+<br>
+  
+## 스크린샷
+
+![Image](https://github.com/user-attachments/assets/f1e28e2f-55be-4631-872f-e27b0190ee46)
 
 <br>
 
