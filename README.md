@@ -1,4 +1,4 @@
-![Image](https://github.com/user-attachments/assets/82ac395b-c0da-419e-9899-cdde044dca9a)
+## ![Image](https://github.com/user-attachments/assets/82ac395b-c0da-419e-9899-cdde044dca9a)
 
 날씨 정보를 확인해 러닝 가능 여부를 판단하고, 
 거리·시간·경로를 기록하여 데이터를 시각적으로 관리할 수 있는 러닝 기록 앱
