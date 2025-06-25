@@ -1,4 +1,4 @@
-<img width="96" alt="Image" src="https://github.com/user-attachments/assets/d2722111-1e07-4e2b-b476-ae723188e942" />
+![Image](https://github.com/user-attachments/assets/82ac395b-c0da-419e-9899-cdde044dca9a)
 
 러닝 여부 확인 및 기록 앱입니다.  
 날씨 정보와 함께 러닝 경로를 기록하고, 평균 페이스와 소요 시간 등 다양한 운동 데이터를 제공합니다.
