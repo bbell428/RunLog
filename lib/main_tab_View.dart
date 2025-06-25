@@ -28,7 +28,7 @@ class _MyWidgetState extends State<MainTabView> {
   final List<BottomNavigationBarItem> _bottomNavItems = const [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
     BottomNavigationBarItem(icon: Icon(Icons.directions_run), label: '기록'),
-    BottomNavigationBarItem(icon: Icon(Icons.event), label: '설정'),
+    BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
   ];
 
   @override
