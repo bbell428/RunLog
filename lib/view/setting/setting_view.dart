@@ -97,13 +97,13 @@ class SettingView extends StatelessWidget {
                   leading: const Icon(Icons.description_outlined),
                   title: const Text("설명"),
                   subtitle: const Text(
-                    "러닝 여부 확인 및 기록 앱",
+                    "러닝 기록 및 날씨 기반 운동 권장 앱",
                   ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.tag),
                   title: const Text("버전"),
-                  subtitle: const Text("1.0.0+1"),
+                  subtitle: const Text("1.0.0"),
                 ),
 
                 const SizedBox(height: 60),
