@@ -8,6 +8,7 @@ class WorkoutResultBloc extends Bloc<WorkoutResultEvent, WorkoutResultState> {
 
   WorkoutResultBloc(this.repo) : super(WorkoutResultInitial()) {
     on<LoadWorkoutResults>(_onLoad);
+    on<DeleteWorkoutResult>(_onDelete);
   }
 
   Future<void> _onLoad(
@@ -20,6 +21,19 @@ class WorkoutResultBloc extends Bloc<WorkoutResultEvent, WorkoutResultState> {
       emit(WorkoutResultLoaded(results));
     } catch (e) {
       emit(WorkoutResultError('불러오기 실패: $e'));
+    }
+  }
+
+  Future<void> _onDelete(
+    DeleteWorkoutResult event,
+    Emitter<WorkoutResultState> emit,
+  ) async {
+    try {
+      await repo.deleteResult(uid: event.uid, docId: event.docId);
+      final results = await repo.fetchRunningResults(event.uid);
+      emit(WorkoutResultLoaded(results));
+    } catch (e) {
+      emit(WorkoutResultError('삭제 실패: $e'));
     }
   }
 }

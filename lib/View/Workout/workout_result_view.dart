@@ -110,28 +110,84 @@ class WorkoutResultViewState extends State<WorkoutResultView> {
                           final distance = record['distance'];
                           final formattedPace = record['formattedPace'];
                           final recordTime = record['recordTime'];
-                          return Card(
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                          return Dismissible(
+                            key: ValueKey(record['recordTime']),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              color: Colors.red,
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
                             ),
-                            child: ListTile(
-                              title: Text('$recordTime'),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (distance >= 1000) ...{
-                                    Text(
-                                      '거리: ${(distance / 1000).toStringAsFixed(2)}km',
+                            confirmDismiss: (direction) async {
+                              return await showDialog<bool>(
+                                context: context,
+                                builder:
+                                    (context) => AlertDialog(
+                                      title: const Text('삭제 확인'),
+                                      content: const Text('이 기록을 삭제하시겠습니까?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed:
+                                              () => Navigator.of(
+                                                context,
+                                              ).pop(false),
+                                          child: const Text('취소'),
+                                        ),
+                                        TextButton(
+                                          onPressed:
+                                              () => Navigator.of(
+                                                context,
+                                              ).pop(true),
+                                          child: const Text('삭제'),
+                                        ),
+                                      ],
                                     ),
-                                  } else ...{
-                                    Text('거리: ${distance.toStringAsFixed(0)}m'),
-                                  },
-                                  Text(
-                                    '시간: ${duration.inMinutes}분 ${duration.inSeconds % 60}초',
+                              );
+                            },
+                            onDismissed: (_) {
+                              final authState = context.read<AuthBloc>().state;
+                              if (authState is Authenticated) {
+                                final docId =
+                                    "${_selectedDay!.year}-${_selectedDay!.month.toString().padLeft(2, '0')}-${_selectedDay!.day.toString().padLeft(2, '0')}_${record['recordTime'].toString().substring(0, 5)}";
+
+                                context.read<WorkoutResultBloc>().add(
+                                  DeleteWorkoutResult(
+                                    uid: authState.user.uid,
+                                    docId: docId,
                                   ),
-                                  Text('평균 페이스: $formattedPace'),
-                                ],
+                                );
+                              }
+                            },
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: ListTile(
+                                title: Text(recordTime),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (distance >= 1000)
+                                      Text(
+                                        '거리: ${(distance / 1000).toStringAsFixed(2)}km',
+                                      )
+                                    else
+                                      Text(
+                                        '거리: ${distance.toStringAsFixed(0)}m',
+                                      ),
+                                    Text(
+                                      '시간: ${duration.inMinutes}분 ${duration.inSeconds % 60}초',
+                                    ),
+                                    Text('평균 페이스: $formattedPace'),
+                                  ],
+                                ),
                               ),
                             ),
                           );

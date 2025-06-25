@@ -71,4 +71,23 @@ class FirebaseRunningRepository {
 
     return resultsByDate;
   }
+
+  // Delete
+  Future<void> deleteResult({
+    required String uid,
+    required String docId,
+  }) async {
+    try {
+      await _db
+          .collection('users')
+          .doc(uid)
+          .collection('results')
+          .doc(docId)
+          .delete();
+      print('Firestore 삭제 성공: uid=$uid, docId=$docId');
+    } catch (e) {
+      print('Firestore 삭제 실패: $e');
+      rethrow;
+    }
+  }
 }
